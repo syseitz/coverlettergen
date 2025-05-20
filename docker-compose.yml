@@ -14,7 +14,7 @@ services:
       CELERY_RESULT_BACKEND: redis://redis:6379/
 
     ports:
-      - "8080:8080"
+      - "8088:8080"
   
   coverlettergen_worker:
     build:
