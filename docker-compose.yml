@@ -4,7 +4,7 @@ services:
   coverlettergen_server:
     build:
       context: .
-      dockerfile: Dockerfile.server.dev
+      dockerfile: Dockerfile.server
     restart: always
     volumes:
       - ./:/app/
@@ -19,7 +19,7 @@ services:
   coverlettergen_worker:
     build:
       context: .
-      dockerfile: Dockerfile.worker.dev
+      dockerfile: Dockerfile.worker
     restart: always
     volumes:
       - ./:/app/
