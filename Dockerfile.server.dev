@@ -1,34 +1,24 @@
-# Dockerfile.worker.dev
+# Dockerfile.server.dev
 
-FROM ubuntu:latest
+FROM --platform=linux/amd64 ubuntu:latest
 
-# Install system dependencies
 RUN apt-get update && \
-    apt-get install -y \
-      python3 \
-      python3-pip \
-      python3-venv \
-      libpq-dev \
-      libcurl4-openssl-dev \
-      libssl-dev \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+    apt-get install -y python3 python3-pip python3-venv libpq-dev libcurl4-openssl-dev libssl-dev && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-# Create a virtual environment
 RUN python3 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
-# Upgrade pip and install pipenv
 RUN pip install --upgrade pip && \
     pip install pipenv
 
-# Set working directory and copy Pipfile and Pipfile.lock
 WORKDIR /app
 COPY Pipfile Pipfile.lock ./
 COPY . .
 
-# Install project dependencies using pipenv
 RUN pipenv install --system --deploy
 
-# Set entrypoint and default command
-ENTRYPOINT ["/app/bin/docker-entrypoint"]
-CMD ["worker"]
+# ENTRYPOINT ["tail", "-F", "anything"]
+
+CMD ["flask", "--app", "server", "run", "--debug", "--host", "0.0.0.0", "--port", "8080"]
