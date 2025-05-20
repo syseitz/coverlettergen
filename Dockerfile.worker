@@ -1,4 +1,4 @@
-# Dockerfile.worker.dev
+# Dockerfile.worker
 
 FROM ubuntu:22.04
 
